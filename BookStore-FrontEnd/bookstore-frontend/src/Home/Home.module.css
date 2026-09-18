@@ -1,0 +1,36 @@
+
+
+.hero{
+    min-height:90vh;
+    display:flex;
+    align-items:center;
+    background:#f8f9fa;
+}
+
+.hero-image{
+    width:80%;
+    max-width:500px;
+}
+
+.hero-content{
+    padding:40px;
+}
+
+.hero-content h1{
+    font-size:55px;
+    font-weight:bold;
+    color:#2c3e50;
+    line-height:1.3;
+}
+
+.hero-content p{
+    margin-top:25px;
+    font-size:20px;
+    color:#555;
+    line-height:1.8;
+}
+
+.hero-content button{
+    margin-top:30px;
+    padding:12px 35px;
+}
