@@ -13,11 +13,10 @@ import UserContext from "./UserContext"
 import AddReview from "./Review/AddReview"
 import ViewReview from "./Review/ViewReview"
 import Cart from "./Cart/Cart"
+import Category from "./Category/Category"
 function App() {
   const[theme,setTheme]=useState("light");
   const[loggedin,setLoggedin]=useState(null);
-
-  //updated.
   
 
   const router=createBrowserRouter([
@@ -47,6 +46,9 @@ function App() {
 {
     path: "reviews/:bookId",
     element: <ViewReview />
+},{
+  path:"category/:genre",
+  element:<Category/>
 },{
   path:"cart",
   element:<Cart/>

@@ -3,12 +3,14 @@ import { useParams } from "react-router-dom";
 function ViewReview(){
     const {bookId}=useParams();
     const[reviews,setReviews]=useState([]);
-    useEffect(()=>{
-        fetch(`http://localhost:8080/api/reviews/book/${bookId}`).then((res)=>res.json()).then((data)=>{
+ useEffect(() => {
+    fetch(`http://localhost:8080/api/reviews/book/${bookId}`)
+        .then((res) => res.json())
+        .then((data) => {
             console.log(data);
             setReviews(data);
-        },[bookId])
-    })
+        });
+}, [bookId]);   
     return(
          <div className="container mt-5">
 
