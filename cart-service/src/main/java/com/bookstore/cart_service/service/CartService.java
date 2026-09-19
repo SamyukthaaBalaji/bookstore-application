@@ -1,4 +1,5 @@
 package com.bookstore.cart_service.service;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,22 +10,20 @@ import org.springframework.stereotype.Service;
 import com.bookstore.cart_service.dto.Bookdto;
 import com.bookstore.cart_service.dto.CartResponse;
 import com.bookstore.cart_service.entity.Cart;
-import com.bookstore.cart_service.feign.BookClient;
+import com.bookstore.cart_service.service.BookServiceClient;
 import com.bookstore.cart_service.repository.CartRepository;
 
 @Service
 public class CartService {
 	 private final CartRepository repository;
-	    private final BookClient bookClient;
+	 private final BookServiceClient bookServiceClient;
 
-	    public CartService(CartRepository repository,
-	                       BookClient bookClient) {
+	 public CartService(CartRepository repository,
+             BookServiceClient bookServiceClient) {
 
-	        this.repository = repository;
-	        this.bookClient = bookClient;
-
-	    }
-
+this.repository = repository;
+this.bookServiceClient = bookServiceClient;
+}
 	    public Cart addToCart(Cart cart){
 
 	        Optional<Cart> existing =
@@ -58,8 +57,8 @@ public class CartService {
 
 	        for(Cart cart : cartItems){
 
-	            Bookdto book =
-	                    bookClient.getBook(cart.getBookId());
+	        	Bookdto book =
+	        	        bookServiceClient.getBook(cart.getBookId());
 
 	            CartResponse dto =
 	                    new CartResponse();

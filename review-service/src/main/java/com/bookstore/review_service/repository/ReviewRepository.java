@@ -10,7 +10,7 @@ import com.bookstore.review_service.entity.Review;
 
 @Repository
 public interface ReviewRepository extends JpaRepository <Review,Long>{
-	List<Review> findBookById(Long bookId);
+	List<Review> findByBookId(Long bookId);
 	List<Review> findByUserId(Long userId);
 	@Query("SELECT AVG(r.rating) FROM Review r WHERE r.bookId = :bookId")
     Double findAverageRatingByBookId(Long bookId);

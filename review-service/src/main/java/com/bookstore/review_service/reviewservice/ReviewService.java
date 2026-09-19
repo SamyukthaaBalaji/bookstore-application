@@ -20,12 +20,9 @@ public class ReviewService {
         return reviewRepository.save(review);
     }
 	
-	// Get all reviews for a specific book
-	public List<Review> getReviewsByBookId(Long BookId){
-		return reviewRepository.findBookById(BookId);
-		
+	public List<Review> getReviewsByBookId(Long bookId) {
+	    return reviewRepository.findByBookId(bookId);
 	}
-	
     // Get all reviews by a specific user
 	public List<Review> getReviewsByUserId(Long UserId) {
 		return reviewRepository.findByUserId(UserId);
