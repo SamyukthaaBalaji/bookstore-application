@@ -19,15 +19,24 @@ public class UserService {
 		 if(repository.findByEmail(user.getEmail()).isPresent()) {
 			    throw new RuntimeException("Email already exists");
 		 }
+		 user.setRole("User");
 		 return repository.save(user);
 	 }
-	  public User login(LoginRequest request) {
-		  return repository.findByEmailAndPassword( request.getEmail(),
-	                request.getPassword())
-	                .orElseThrow(() ->
-	                        new RuntimeException("Invalid Email or Password"));
-		  
-	  }
+	 public User login(LoginRequest request) {
+
+		    User user = repository.findByEmailAndPassword(
+		            request.getEmail(),
+		            request.getPassword()
+		    ).orElseThrow(() ->
+		            new RuntimeException("Invalid Email or Password")
+		    );
+
+		    if (!user.getPassword().equals(request.getPassword())) {
+		        throw new RuntimeException("Invalid Email or Password");
+		    }
+
+		    return user;
+		}
 	  public List<User> getAllUsers() {
 		  return repository.findAll();
 	  }

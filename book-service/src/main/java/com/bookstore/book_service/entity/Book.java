@@ -24,6 +24,16 @@ public class Book {
 		// TODO Auto-generated constructor stub
 	}
 
+    @Column(nullable = false)
+    private Integer stock = 0;
+    
+    public Integer getStock() {
+        return stock;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
+    }
 	@Override
 	public String toString() {
 		return "Book [id=" + id + ", title=" + title + ", author=" + author + ", genre=" + genre + ", isbn=" + isbn
@@ -43,6 +53,8 @@ public class Book {
 		this.price = price;
 		this.publishedDate = publishedDate;
 		this.language = language;
+	    this.stock = stock;
+
 	}
 
 	public Long getId() {

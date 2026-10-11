@@ -16,6 +16,18 @@ public class User {
 
     private String username;
 
+@Column(nullable = false)
+private String role = "USER";
+
+public String getRole() {
+    return role;
+}
+
+public void setRole(String role) {
+    this.role = role;
+}
+
+
     @Column(unique = true)
     private String email;
 

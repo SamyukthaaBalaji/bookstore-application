@@ -86,4 +86,22 @@ public class BookController {
 
     }
     
+    @PutMapping("/{id}/stock")
+    public ResponseEntity<Book> updateStock(
+            @PathVariable Long id,
+            @RequestParam Integer quantity) {
+
+        if (quantity == null || quantity < 0) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Book book = bookService.getBookById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("Book not found"));
+
+        book.setStock(quantity);
+
+        return ResponseEntity.ok(bookService.updateBook(id, book));
+    }
+    
 }

@@ -33,4 +33,9 @@ public class BookServiceClient {
 
         return null;
     }
+    
+    public Bookdto updateStock(Long bookId, Integer quantity) {
+        return bookClient.updateStock(bookId, quantity);
+    }
+    
 }

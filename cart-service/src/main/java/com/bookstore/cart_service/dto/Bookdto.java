@@ -1,47 +1,54 @@
+
 package com.bookstore.cart_service.dto;
 
 public class Bookdto {
-	 private Long id;
 
-	    private String title;
+    private Long id;
+    private String title;
+    private String author;
+    private double price;
+    private Integer stock;
 
-	    private String author;
+    public Bookdto() {
+    }
 
-	    private double price;
+    public Long getId() {
+        return id;
+    }
 
-	    public Bookdto() {
-	    }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	    public Long getId() {
-	        return id;
-	    }
+    public String getTitle() {
+        return title;
+    }
 
-	    public void setId(Long id) {
-	        this.id = id;
-	    }
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	    public String getTitle() {
-	        return title;
-	    }
+    public String getAuthor() {
+        return author;
+    }
 
-	    public void setTitle(String title) {
-	        this.title = title;
-	    }
+    public void setAuthor(String author) {
+        this.author = author;
+    }
 
-	    public String getAuthor() {
-	        return author;
-	    }
+    public double getPrice() {
+        return price;
+    }
 
-	    public void setAuthor(String author) {
-	        this.author = author;
-	    }
+    public void setPrice(double price) {
+        this.price = price;
+    }
 
-	    public double getPrice() {
-	        return price;
-	    }
+    public Integer getStock() {
+        return stock;
+    }
 
-	    public void setPrice(double price) {
-	        this.price = price;
-	    }
-
+    public void setStock(Integer stock) {
+        this.stock = stock;
+    }
 }

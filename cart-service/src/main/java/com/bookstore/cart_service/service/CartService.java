@@ -24,28 +24,47 @@ public class CartService {
 this.repository = repository;
 this.bookServiceClient = bookServiceClient;
 }
-	    public Cart addToCart(Cart cart){
+	 public Cart addToCart(Cart cart) {
 
-	        Optional<Cart> existing =
-	                repository.findByUserIdAndBookId(
-	                        cart.getUserId(),
-	                        cart.getBookId());
+		    // Get book details from Book Service
+		    Bookdto book = bookServiceClient.getBook(cart.getBookId());
 
-	        if(existing.isPresent()){
+		    if (book == null) {
+		        throw new RuntimeException("Book Service is unavailable");
+		    }
 
-	            Cart c = existing.get();
+		    // Check available stock
+		    if (book.getStock() == null || book.getStock() <= 0) {
+		        throw new RuntimeException("Book is out of stock");
+		    }
 
-	            c.setQuantity(c.getQuantity()+1);
+		    // Find existing cart item
+		    Optional<Cart> existing = repository.findByUserIdAndBookId(
+		            cart.getUserId(), cart.getBookId());
 
-	            return repository.save(c);
+		    int currentQuantity = existing
+		            .map(Cart::getQuantity)
+		            .orElse(0);
 
-	        }
+		    // Prevent adding more copies than available
+		    if (currentQuantity >= book.getStock()) {
+		        throw new RuntimeException("Not enough stock available");
+		    }
 
-	        cart.setQuantity(1);
+		    // Decrease stock by one
+		    bookServiceClient.updateStock(
+		            cart.getBookId(), book.getStock() - 1);
 
-	        return repository.save(cart);
+		    // Update cart quantity
+		    if (existing.isPresent()) {
+		        Cart existingCart = existing.get();
+		        existingCart.setQuantity(existingCart.getQuantity() + 1);
+		        return repository.save(existingCart);
+		    }
 
-	    }
+		    cart.setQuantity(1);
+		    return repository.save(cart);
+		}
 
 	    public List<CartResponse> getCart(Long userId){
 
@@ -76,11 +95,26 @@ this.bookServiceClient = bookServiceClient;
 
 	    }
 
-	    public void remove(Long id){
+	    public void remove(Long id) {
 
-	        repository.deleteById(id);
+	        // Find the cart item before deleting it
+	        Cart cart = repository.findById(id)
+	                .orElseThrow(() -> new RuntimeException("Cart item not found"));
 
+	        // Get current book stock
+	        Bookdto book = bookServiceClient.getBook(cart.getBookId());
+
+	        if (book == null) {
+	            throw new RuntimeException("Book Service is unavailable");
+	        }
+
+	        // Restore all copies reserved by this cart item
+	        bookServiceClient.updateStock(
+	                cart.getBookId(),
+	                book.getStock() + cart.getQuantity());
+
+	        // Delete the cart item
+	        repository.delete(cart);
 	    }
-
 
 }

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.bookstore.book_service.entity.Book;
 import com.bookstore.book_service.repository.BookRepository;
-import com.bookstore.book_service.vector.QuadrantService;
+
 
 @Service
 
@@ -21,8 +21,6 @@ public class BookService {
 
     BookRepository bookRepository;
 	
-	@Autowired
-	QuadrantService  qdrantService;
 
 	public Page<Book> getAllBooks(Pageable pageable) {
 	    return bookRepository.findAll(pageable);
